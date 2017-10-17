@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            var oimg = document.getElementById('Img1');
+            var cimg = document.getElementById('Img2');
+            function change() {
+                //oimg.src = "./banner_cloud.gif";
+                cimg.style.display = 'block';
+                oimg.remove();
+               
+            }
+            setTimeout(change,2800);
+
+           
+        }
+    </script>
+</head>
+<body>
+    <img src="banner_1.gif" id="Img1" alt="">
+    <img src="banner_cloud.gif" id="Img2" alt="" style="display: none;"/>
+</body>
+</html>
