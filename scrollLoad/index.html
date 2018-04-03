@@ -1,0 +1,57 @@
+
+<!DOCTYPE=html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>滚动加载</title>
+    <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var range = 50;             //距下边界长度/单位px  
+           
+            var maxnum = 20;            //设置加载最多次数  
+            var num = 1;
+            var totalheight = 0;
+
+            var content = $('#content');                     //外部容器
+            var main = $(".scrollCont");                     //主体元素  
+            content.scroll(function () {
+
+                console.log(totalheight, main.height() )    
+                var srollPos = content.scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)  
+
+                //console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());  
+                //console.log("页面的文档高度 ："+$(document).height());  
+                //console.log('浏览器的高度：'+$(window).height());  
+
+                totalheight = parseFloat(content.height()) + parseFloat(srollPos);
+                if (totalheight >= (main.height() - range) && num != maxnum) {          //当滚动的距离加上外部容器的高度大于 滚动主题元素高度 且满足条件
+                    main.append(
+                        "<div style='border:1px solid tomato;margin-top:20px;height:800px' >内部滚动容器的高度:" + main.height() +
+                             "<br>滚动条距顶部距离(页面超出窗口的高度):" + totalheight + "<br>"+num+"</div>"
+                    );
+                    num++;
+
+                    
+                }
+                
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="content" style="width:1000px;height:760px; overflow:auto;margin:0 auto;">
+
+        <div class="scrollCont">
+            <div id="follow">this is a scroll test;<br/> 页面下拉自动加载内容</div>
+            <div style='border:2px solid tomato;margin-top:20px;color:#ac1;height:800'>hello world test DIV</div>
+        </div>
+    </div>
+</body>
+
+</html>
