@@ -1,0 +1,4316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>新bootstrap的固定表头</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+	 crossorigin="anonymous">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdn.bootcss.com/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+	 crossorigin="anonymous"></script>
+	<script src="js/fix.js"></script>
+	<style>
+		*{
+			box-sizing: border-box;
+		}
+		.scrollbar table th{
+				border-top: none;
+			  border-left: 1px solid #5693B1;
+				background: #6DA0B9;
+				color: #fff;
+		}
+		.scrollbar table thead tr{
+				border-bottom: 2px solid #5693B1;
+		}
+		.scrollbar tbody tr:nth-child(odd) {
+				background: #F9F9F9;
+		}
+		.scrollbar table td{
+			border-left: 1px solid #e9ecef;
+		}
+		
+		.fixTableBox {
+			margin-bottom: 20px;
+		}
+
+		.fixThead table {
+			margin: 0;
+		}
+
+		.setHeight,
+		.setWidth {
+			overflow: auto;
+		}
+
+		.theadWrap {
+			position: relative;
+		}
+
+		.theadScroll {
+			overflow: hidden;
+		}
+		/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+		.scrollbar ::-webkit-scrollbar {
+			width: 8px;
+			height: 8px;	
+		}
+		/*定义滚动条轨道 内阴影+圆角*/
+		.scrollbar ::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+			border-radius: 10px;
+			background-color: #F5F5F5;
+		}
+		/*定义滑块 内阴影+圆角*/
+		.scrollbar ::-webkit-scrollbar-thumb {
+			border-radius: 10px;
+			box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+			background-color: #929292;
+		}
+	</style>
+</head>
+
+<body style="padding:10px 0;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="fixTableBox scrollbar">
+					<table id="testTab" class="table table-hover">
+						<thead>
+							<tr>
+								<th>時間</th>
+								<th>店鋪名稱</th>
+								<th>銷售單號</th>
+								<th>基本貨幣</th>
+
+								<th>MOP</th>
+								<th>HKD</th>
+								<th>RMB</th>
+								<th>VISA/MASTER</th>
+								<th>銀聯</th>
+								<th>AE</th>
+								<th>NT</th>
+								<th>銀行匯款/轉帳</th>
+								<th>到店支付</th>
+								<th>VISA／MASTER／PAYPAL快速結帳</th>
+								<th>順豐代收貨款</th>
+								<th>找回</th>
+								<th>小計</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+							<tr>
+								<td>2016-12-12 16:15:36</td>
+								<td>澳門信達城</td>
+								<td>2016121249700</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 16:15:58</td>
+								<td>澳門高士德</td>
+								<td>2016121284375</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 16:16:11</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121236389</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 16:31:40</td>
+								<td>澳門高士德</td>
+								<td>2016121234698</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 16:34:02</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121235216</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 16:37:08</td>
+								<td>澳門高士德</td>
+								<td>2016121201019</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 16:40:24</td>
+								<td>澳門信達城</td>
+								<td>2016121266308</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 17:04:29</td>
+								<td>黑沙環分店</td>
+								<td>2016121274500</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 17:10:50</td>
+								<td>澳門信達城</td>
+								<td>2016121218844</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 17:38:11</td>
+								<td>澳門高士德</td>
+								<td>2016121267018</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 18:00:16</td>
+								<td>澳門信達城</td>
+								<td>2016121259836</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 18:03:02</td>
+								<td>黑沙環分店</td>
+								<td>2016121263769</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 18:50:25</td>
+								<td>澳門高士德</td>
+								<td>2016121236730</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 18:54:06</td>
+								<td>澳門高士德</td>
+								<td>2016121239283</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 19:03:55</td>
+								<td>澳門信達城</td>
+								<td>2016121293321</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 19:12:30</td>
+								<td>澳門高士德</td>
+								<td>2016121288511</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 19:41:26</td>
+								<td>澳門信達城</td>
+								<td>2016121227614</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 19:45:52</td>
+								<td>澳門信達城</td>
+								<td>2016121221133</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 19:55:37</td>
+								<td>澳門高士德</td>
+								<td>2016121224076</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 20:31:37</td>
+								<td>澳門信達城</td>
+								<td>2016121282578</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-12 20:59:47</td>
+								<td>澳門高士德</td>
+								<td>2016121298929</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td><b>每天總計:</b></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0.0</b></td>
+							</tr>
+							<tr>
+								<td>2016-12-13 12:41:12</td>
+								<td>澳門信達城</td>
+								<td>2016121360228</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 12:58:53</td>
+								<td>澳門信達城</td>
+								<td>2016121314259</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 13:02:57</td>
+								<td>澳門信達城</td>
+								<td>2016121327922</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 13:33:03</td>
+								<td>澳門高士德</td>
+								<td>2016121309383</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 13:53:57</td>
+								<td>黑沙環分店</td>
+								<td>2016121335220</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 13:54:31</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121390707</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 13:55:34</td>
+								<td>黑沙環分店</td>
+								<td>2016121383780</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 14:11:28</td>
+								<td>澳門信達城</td>
+								<td>2016121338466</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 14:18:12</td>
+								<td>澳門高士德</td>
+								<td>2016121331727</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 14:26:48</td>
+								<td>澳門高士德</td>
+								<td>2016121304930</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 16:21:29</td>
+								<td>澳門高士德</td>
+								<td>2016121348046</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 16:24:02</td>
+								<td>澳門信達城</td>
+								<td>2016121346814</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 16:49:02</td>
+								<td>澳門高士德</td>
+								<td>2016121397493</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 17:03:24</td>
+								<td>澳門高士德</td>
+								<td>2016121358352</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 17:15:43</td>
+								<td>澳門高士德</td>
+								<td>2016121321869</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 18:15:58</td>
+								<td>澳門高士德</td>
+								<td>2016121316074</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 18:17:57</td>
+								<td>澳門信達城</td>
+								<td>2016121316548</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 18:29:25</td>
+								<td>黑沙環分店</td>
+								<td>2016121377199</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 18:55:11</td>
+								<td>澳門高士德</td>
+								<td>2016121319334</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 19:19:43</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121307428</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 19:26:09</td>
+								<td>澳門信達城</td>
+								<td>2016121350599</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 19:35:15</td>
+								<td>澳門信達城</td>
+								<td>2016121376627</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 19:36:35</td>
+								<td>澳門高士德</td>
+								<td>2016121321710</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 19:46:34</td>
+								<td>澳門信達城</td>
+								<td>2016121348754</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-13 19:54:37</td>
+								<td>黑沙環分店</td>
+								<td>2016121337863</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td><b>每天總計:</b></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0.0</b></td>
+							</tr>
+							<tr>
+								<td>2016-12-14 12:26:03</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121484624</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 12:59:02</td>
+								<td>黑沙環分店</td>
+								<td>2016121412779</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 13:17:38</td>
+								<td>澳門高士德</td>
+								<td>2016121447679</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+
+								<td>2016-12-14 13:22:01</td>
+								<td>澳門高士德</td>
+								<td>2016121473898</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 13:27:08</td>
+								<td>澳門信達城</td>
+								<td>2016121419845</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 13:34:30</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121439491</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 13:50:52</td>
+								<td>澳門高士德</td>
+								<td>2016121443344</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 14:30:26</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121480614</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 14:31:18</td>
+								<td>黑沙環分店</td>
+								<td>2016121456756</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 14:42:30</td>
+								<td>澳門信達城</td>
+								<td>2016121460402</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 15:30:43</td>
+								<td>澳門高士德</td>
+								<td>2016121432891</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 16:05:22</td>
+								<td>澳門信達城</td>
+								<td>2016121417639</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 16:22:33</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121448032</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 16:53:19</td>
+								<td>澳門高士德</td>
+								<td>2016121456854</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 17:00:34</td>
+								<td>澳門信達城</td>
+								<td>2016121438522</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 17:05:48</td>
+								<td>澳門高士德</td>
+								<td>2016121489924</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 17:15:52</td>
+								<td>澳門高士德</td>
+								<td>2016121429258</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 17:17:55</td>
+								<td>澳門高士德</td>
+								<td>2016121473267</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 17:38:50</td>
+								<td>澳門高士德</td>
+								<td>2016121406078</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 17:56:32</td>
+								<td>澳門高士德</td>
+								<td>2016121496457</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 18:35:13</td>
+								<td>澳門高士德</td>
+								<td>2016121436727</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 18:48:45</td>
+								<td>澳門高士德</td>
+								<td>2016121496587</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 19:29:25</td>
+								<td>澳門信達城</td>
+								<td>2016121432833</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 19:41:58</td>
+								<td>澳門高士德</td>
+								<td>2016121458036</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 20:05:38</td>
+								<td>黑沙環分店</td>
+								<td>2016121434660</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-14 21:23:35</td>
+								<td>澳門信達城</td>
+								<td>2016121402853</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td><b>每天總計:</b></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0.0</b></td>
+							</tr>
+							<tr>
+								<td>2016-12-15 12:15:29</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121504103</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 12:55:25</td>
+								<td>澳門高士德</td>
+								<td>2016121528970</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 13:33:37</td>
+								<td>澳門高士德</td>
+								<td>2016121599905</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 14:10:19</td>
+								<td>澳門信達城</td>
+								<td>2016121538626</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 14:59:31</td>
+								<td>澳門信達城</td>
+								<td>2016121526325</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 15:22:50</td>
+								<td>澳門高士德</td>
+								<td>2016121552538</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 15:33:48</td>
+								<td>澳門高士德</td>
+								<td>2016121519950</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 15:35:30</td>
+								<td>澳門信達城</td>
+								<td>2016121534599</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 15:38:50</td>
+								<td>澳門高士德</td>
+								<td>2016121501398</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 15:53:45</td>
+								<td>香港銅鑼坊</td>
+								<td>2016121527168</td>
+								<td>HKD</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 16:29:55</td>
+								<td>澳門高士德</td>
+								<td>2016121534973</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 16:33:52</td>
+								<td>澳門信達城</td>
+								<td>2016121593447</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-15 17:41:30</td>
+								<td>澳門高士德</td>
+								<td>2016121566805</td>
+								<td>MOP</td>
+
+								<td>4800.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>4800.0</td>
+							</tr>
+							<tr>
+								<td><b>每天總計:</b></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>4800.00</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>4800.0</b></td>
+							</tr>
+							<tr>
+								<td>2016-12-16 17:42:42</td>
+								<td>澳門高士德</td>
+								<td>2016121688042</td>
+								<td>MOP</td>
+
+								<td>19.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>1100.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>1119.00</td>
+							</tr>
+							<tr>
+								<td><b>每天總計:</b></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>19.00</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>1100.00</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>1119.00</b></td>
+							</tr>
+							<tr>
+								<td>2016-12-19 15:32:44</td>
+								<td>澳門高士德</td>
+								<td>2016121996279</td>
+								<td>MOP</td>
+
+								<td>360.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>360.0</td>
+							</tr>
+							<tr>
+								<td><b>每天總計:</b></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>360.00</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>360.0</b></td>
+							</tr>
+							<tr>
+								<td>2016-12-30 14:16:59</td>
+								<td>澳門高士德</td>
+								<td>2016123047567</td>
+								<td>MOP</td>
+
+								<td>140.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>140.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-30 14:42:04</td>
+								<td>澳門高士德</td>
+								<td>2016123048075</td>
+								<td>MOP</td>
+
+								<td>279.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>279.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-30 15:57:29</td>
+								<td>澳門高士德</td>
+								<td>2016123091873</td>
+								<td>MOP</td>
+
+								<td>109.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>109.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-30 16:18:46</td>
+								<td>澳門高士德</td>
+								<td>2016123076582</td>
+								<td>MOP</td>
+
+								<td>960.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>960.0</td>
+							</tr>
+							<tr>
+								<td>2016-12-30 16:19:32</td>
+								<td>澳門高士德</td>
+								<td>2016123016441</td>
+								<td>MOP</td>
+
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>480.00</td>
+								<td>-480.00</td>
+							</tr>
+							<tr>
+								<td>2016-12-30 17:21:04</td>
+								<td>澳門高士德</td>
+								<td>2016123034659</td>
+								<td>MOP</td>
+
+								<td>100.00</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>100.0</td>
+							</tr>
+							<tr>
+								<td><b>每天總計:</b></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>1588.00</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>480.00</b></td>
+								<td><b>1108.00</b></td>
+							</tr>
+							<tr>
+								<td><b>全部總計:</b></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>88497.00</b></td>
+								<td><b>12003.10</b></td>
+								<td><b>0</b></td>
+								<td><b>80012.00</b></td>
+								<td><b>50189.00</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>0</b></td>
+								<td><b>15073.00</b></td>
+								<td><b>215663.10</b></td>
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+
+			</div>
+			<div class="col-md-4">
+				<div class="fixTableBox scrollbar">
+					<table id="testTab2" class="table table-hover">
+						<thead>
+							<tr>
+								<th>時間</th>
+								<th>店鋪名稱</th>
+								<th>銷售單號</th>
+								<th>基本貨幣</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+						</tbody>
+
+
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="fixTableBox scrollbar">
+			<table id="dataTable" class="table table-hover">
+				<thead>
+					<tr>
+						<th>時間</th>
+						<th>店鋪名稱</th>
+						<th>銷售單號</th>
+						<th>基本貨幣</th>
+
+						<th>MOP</th>
+						<th>HKD</th>
+						<th>RMB</th>
+						<th>VISA/MASTER</th>
+						<th>銀聯</th>
+						<th>AE</th>
+						<th>NT</th>
+						<th>銀行匯款/轉帳</th>
+						<th>到店支付</th>
+						<th>VISA／MASTER／PAYPAL快速結帳</th>
+						<th>順豐代收貨款</th>
+						<th>找回</th>
+						<th>小計</th>
+					</tr>
+				</thead>
+
+				<tbody>
+
+					<tr>
+						<td>2016-12-12 16:15:36</td>
+						<td>澳門信達城</td>
+						<td>2016121249700</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 16:15:58</td>
+						<td>澳門高士德</td>
+						<td>2016121284375</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 16:16:11</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121236389</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 16:31:40</td>
+						<td>澳門高士德</td>
+						<td>2016121234698</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 16:34:02</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121235216</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 16:37:08</td>
+						<td>澳門高士德</td>
+						<td>2016121201019</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 16:40:24</td>
+						<td>澳門信達城</td>
+						<td>2016121266308</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 17:04:29</td>
+						<td>黑沙環分店</td>
+						<td>2016121274500</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 17:10:50</td>
+						<td>澳門信達城</td>
+						<td>2016121218844</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 17:38:11</td>
+						<td>澳門高士德</td>
+						<td>2016121267018</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 18:00:16</td>
+						<td>澳門信達城</td>
+						<td>2016121259836</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 18:03:02</td>
+						<td>黑沙環分店</td>
+						<td>2016121263769</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 18:50:25</td>
+						<td>澳門高士德</td>
+						<td>2016121236730</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 18:54:06</td>
+						<td>澳門高士德</td>
+						<td>2016121239283</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 19:03:55</td>
+						<td>澳門信達城</td>
+						<td>2016121293321</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 19:12:30</td>
+						<td>澳門高士德</td>
+						<td>2016121288511</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 19:41:26</td>
+						<td>澳門信達城</td>
+						<td>2016121227614</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 19:45:52</td>
+						<td>澳門信達城</td>
+						<td>2016121221133</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 19:55:37</td>
+						<td>澳門高士德</td>
+						<td>2016121224076</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 20:31:37</td>
+						<td>澳門信達城</td>
+						<td>2016121282578</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-12 20:59:47</td>
+						<td>澳門高士德</td>
+						<td>2016121298929</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td><b>每天總計:</b></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0.0</b></td>
+					</tr>
+					<tr>
+						<td>2016-12-13 12:41:12</td>
+						<td>澳門信達城</td>
+						<td>2016121360228</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 12:58:53</td>
+						<td>澳門信達城</td>
+						<td>2016121314259</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 13:02:57</td>
+						<td>澳門信達城</td>
+						<td>2016121327922</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 13:33:03</td>
+						<td>澳門高士德</td>
+						<td>2016121309383</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 13:53:57</td>
+						<td>黑沙環分店</td>
+						<td>2016121335220</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 13:54:31</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121390707</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 13:55:34</td>
+						<td>黑沙環分店</td>
+						<td>2016121383780</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 14:11:28</td>
+						<td>澳門信達城</td>
+						<td>2016121338466</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 14:18:12</td>
+						<td>澳門高士德</td>
+						<td>2016121331727</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 14:26:48</td>
+						<td>澳門高士德</td>
+						<td>2016121304930</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 16:21:29</td>
+						<td>澳門高士德</td>
+						<td>2016121348046</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 16:24:02</td>
+						<td>澳門信達城</td>
+						<td>2016121346814</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 16:49:02</td>
+						<td>澳門高士德</td>
+						<td>2016121397493</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 17:03:24</td>
+						<td>澳門高士德</td>
+						<td>2016121358352</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 17:15:43</td>
+						<td>澳門高士德</td>
+						<td>2016121321869</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 18:15:58</td>
+						<td>澳門高士德</td>
+						<td>2016121316074</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 18:17:57</td>
+						<td>澳門信達城</td>
+						<td>2016121316548</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 18:29:25</td>
+						<td>黑沙環分店</td>
+						<td>2016121377199</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 18:55:11</td>
+						<td>澳門高士德</td>
+						<td>2016121319334</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 19:19:43</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121307428</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 19:26:09</td>
+						<td>澳門信達城</td>
+						<td>2016121350599</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 19:35:15</td>
+						<td>澳門信達城</td>
+						<td>2016121376627</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 19:36:35</td>
+						<td>澳門高士德</td>
+						<td>2016121321710</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 19:46:34</td>
+						<td>澳門信達城</td>
+						<td>2016121348754</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-13 19:54:37</td>
+						<td>黑沙環分店</td>
+						<td>2016121337863</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td><b>每天總計:</b></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0.0</b></td>
+					</tr>
+					<tr>
+						<td>2016-12-14 12:26:03</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121484624</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 12:59:02</td>
+						<td>黑沙環分店</td>
+						<td>2016121412779</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 13:17:38</td>
+						<td>澳門高士德</td>
+						<td>2016121447679</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+
+						<td>2016-12-14 13:22:01</td>
+						<td>澳門高士德</td>
+						<td>2016121473898</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 13:27:08</td>
+						<td>澳門信達城</td>
+						<td>2016121419845</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 13:34:30</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121439491</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 13:50:52</td>
+						<td>澳門高士德</td>
+						<td>2016121443344</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 14:30:26</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121480614</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 14:31:18</td>
+						<td>黑沙環分店</td>
+						<td>2016121456756</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 14:42:30</td>
+						<td>澳門信達城</td>
+						<td>2016121460402</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 15:30:43</td>
+						<td>澳門高士德</td>
+						<td>2016121432891</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 16:05:22</td>
+						<td>澳門信達城</td>
+						<td>2016121417639</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 16:22:33</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121448032</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 16:53:19</td>
+						<td>澳門高士德</td>
+						<td>2016121456854</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 17:00:34</td>
+						<td>澳門信達城</td>
+						<td>2016121438522</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 17:05:48</td>
+						<td>澳門高士德</td>
+						<td>2016121489924</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 17:15:52</td>
+						<td>澳門高士德</td>
+						<td>2016121429258</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 17:17:55</td>
+						<td>澳門高士德</td>
+						<td>2016121473267</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 17:38:50</td>
+						<td>澳門高士德</td>
+						<td>2016121406078</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 17:56:32</td>
+						<td>澳門高士德</td>
+						<td>2016121496457</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 18:35:13</td>
+						<td>澳門高士德</td>
+						<td>2016121436727</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 18:48:45</td>
+						<td>澳門高士德</td>
+						<td>2016121496587</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 19:29:25</td>
+						<td>澳門信達城</td>
+						<td>2016121432833</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 19:41:58</td>
+						<td>澳門高士德</td>
+						<td>2016121458036</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 20:05:38</td>
+						<td>黑沙環分店</td>
+						<td>2016121434660</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-14 21:23:35</td>
+						<td>澳門信達城</td>
+						<td>2016121402853</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td><b>每天總計:</b></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0.0</b></td>
+					</tr>
+					<tr>
+						<td>2016-12-15 12:15:29</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121504103</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 12:55:25</td>
+						<td>澳門高士德</td>
+						<td>2016121528970</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 13:33:37</td>
+						<td>澳門高士德</td>
+						<td>2016121599905</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 14:10:19</td>
+						<td>澳門信達城</td>
+						<td>2016121538626</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 14:59:31</td>
+						<td>澳門信達城</td>
+						<td>2016121526325</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 15:22:50</td>
+						<td>澳門高士德</td>
+						<td>2016121552538</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 15:33:48</td>
+						<td>澳門高士德</td>
+						<td>2016121519950</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 15:35:30</td>
+						<td>澳門信達城</td>
+						<td>2016121534599</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 15:38:50</td>
+						<td>澳門高士德</td>
+						<td>2016121501398</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 15:53:45</td>
+						<td>香港銅鑼坊</td>
+						<td>2016121527168</td>
+						<td>HKD</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 16:29:55</td>
+						<td>澳門高士德</td>
+						<td>2016121534973</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 16:33:52</td>
+						<td>澳門信達城</td>
+						<td>2016121593447</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-15 17:41:30</td>
+						<td>澳門高士德</td>
+						<td>2016121566805</td>
+						<td>MOP</td>
+
+						<td>4800.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>4800.0</td>
+					</tr>
+					<tr>
+						<td><b>每天總計:</b></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><b>4800.00</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>4800.0</b></td>
+					</tr>
+					<tr>
+						<td>2016-12-16 17:42:42</td>
+						<td>澳門高士德</td>
+						<td>2016121688042</td>
+						<td>MOP</td>
+
+						<td>19.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>1100.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>1119.00</td>
+					</tr>
+					<tr>
+						<td><b>每天總計:</b></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><b>19.00</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>1100.00</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>1119.00</b></td>
+					</tr>
+					<tr>
+						<td>2016-12-19 15:32:44</td>
+						<td>澳門高士德</td>
+						<td>2016121996279</td>
+						<td>MOP</td>
+
+						<td>360.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>360.0</td>
+					</tr>
+					<tr>
+						<td><b>每天總計:</b></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><b>360.00</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>360.0</b></td>
+					</tr>
+					<tr>
+						<td>2016-12-30 14:16:59</td>
+						<td>澳門高士德</td>
+						<td>2016123047567</td>
+						<td>MOP</td>
+
+						<td>140.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>140.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-30 14:42:04</td>
+						<td>澳門高士德</td>
+						<td>2016123048075</td>
+						<td>MOP</td>
+
+						<td>279.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>279.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-30 15:57:29</td>
+						<td>澳門高士德</td>
+						<td>2016123091873</td>
+						<td>MOP</td>
+
+						<td>109.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>109.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-30 16:18:46</td>
+						<td>澳門高士德</td>
+						<td>2016123076582</td>
+						<td>MOP</td>
+
+						<td>960.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>960.0</td>
+					</tr>
+					<tr>
+						<td>2016-12-30 16:19:32</td>
+						<td>澳門高士德</td>
+						<td>2016123016441</td>
+						<td>MOP</td>
+
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>480.00</td>
+						<td>-480.00</td>
+					</tr>
+					<tr>
+						<td>2016-12-30 17:21:04</td>
+						<td>澳門高士德</td>
+						<td>2016123034659</td>
+						<td>MOP</td>
+
+						<td>100.00</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>100.0</td>
+					</tr>
+					<tr>
+						<td><b>每天總計:</b></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><b>1588.00</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>480.00</b></td>
+						<td><b>1108.00</b></td>
+					</tr>
+					<tr>
+						<td><b>全部總計:</b></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><b>88497.00</b></td>
+						<td><b>12003.10</b></td>
+						<td><b>0</b></td>
+						<td><b>80012.00</b></td>
+						<td><b>50189.00</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>0</b></td>
+						<td><b>15073.00</b></td>
+						<td><b>215663.10</b></td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+
+	</div>
+	<script>
+		fixTab('testTab', '350');
+		fixTab('testTab2', '350');
+		
+		fixTab('dataTable', 'auto');
+	</script>
+</body>
+
+</html>
