@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>手机APP下载页面：根据终端辨别下载地址</title>
+<script type="text/javascript">
+	//判断微信
+	var is_weixin = (function(){return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1})();
+	window.onload = function() {
+	
+	 // 获取终端的相关信息
+        var Terminal = {
+            // 辨别移动终端类型
+            platform : function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    // android终端或者uc浏览器
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    // 是否为iPhone或者QQHD浏览器
+                    iPhone: u.indexOf('iPhone') > -1 ,
+                    // 是否iPad
+                    iPad: u.indexOf('iPad') > -1
+                };
+            }(),
+            // 辨别移动终端的语言：zh-cn、en-us、ko-kr、ja-jp...
+            language : (navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+ 
+        // 根据不同的终端，跳转到不同的地址
+        var theUrl = 'https://trade.pspme.cn/pspme_app/PacificSky.apk';
+        if(Terminal.platform.android){
+            theUrl = 'https://trade.pspme.cn/pspme_app/PacificSky.apk';
+        }else if(Terminal.platform.iPhone){
+            theUrl = 'https://itunes.apple.com/cn/app/bai-shi-jia/id1157271823?mt=8';
+        }else if(Terminal.platform.iPad){
+            // 还可以通过language，区分开多国语言版
+           theUrl = 'https://itunes.apple.com/cn/app/bai-shi-jia/id1157271823?mt=8';
+        }else{
+			//PC调整分辨率
+			document.body.style.zoom = '1';
+		}
+		
+		
+        var el = document.getElementById('J_weixin');
+		el.setAttribute("href", theUrl);	
+	
+		//判断微信
+		var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight; //兼容IOS，不需要的可以去掉
+		var btn = document.getElementById('J_weixin');
+		var tip = document.getElementById('weixin-tip');
+		//var close = document.getElementById('close');
+		if (is_weixin) {
+			btn.onclick = function(e) {
+				tip.style.height = winHeight + 'px'; //兼容IOS弹窗整屏
+				tip.style.display = 'block';
+				return false;
+			}
+			tip.onclick = function() {
+				tip.style.display = 'none';
+			}
+		}
+	}
+    </script>
+<style>
+html{
+	font-size: 62.5%;
+	
+}
+body{
+	zoom:1.8;
+	padding:5rem 0;
+	font-family:'微软雅黑';
+	background: #16222A; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #16222A , #3A6073); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #16222A , #3A6073); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	height:100%;	
+	overflow:hidden;	
+}
+.title{
+	padding:1rem 0;
+	text-align:center;
+	margin:0 auto;
+	color:#fff;
+	font-weight:normal;
+	text-shadow: 0 2px 8px #1A2831;
+}
+h1{
+	font-size:4.0rem;
+}
+h2{
+	font-size:2.8rem;
+}
+.appicon{
+	display:block ;
+	margin:2rem auto 4rem; 
+	width:100px;
+	border-radius:12px;
+	box-shadow:0 10px 18px rgba(0,0,0,0.20);
+}
+.download{
+	width:220px;
+	height:56px;
+	line-height:56px;
+	margin:0 auto;
+	border-radius:30px;
+	border:2px solid #fff;
+	text-align:center;
+}
+
+.download a{
+	display:block;
+	color:#fff;
+	font-size:2.0rem;
+	text-decoration:none;
+}
+
+.Anphone{
+	position:absolute;
+	width:380px;
+	left:50%;
+	margin-left:-190px;
+	z-index:-1;
+	animation:myPhone 1s ease;
+	-webkit-animation:myPhone 1s ease;
+}
+.Anpic{
+	position:absolute;
+	opacity:1;
+	width:267px;
+	left:50%;
+	margin-left:-134px;
+	top:119px;
+	z-index:0;
+	animation:myPic 1s ease;
+	-webkit-animation:myPic 1s ease;
+}
+@keyframes myPhone
+{
+	from {top:80px;}
+	to {top:0px;}
+}
+@keyframes myPic
+{
+	from {top:199px; opacity:0}
+	to {top:119px;  opacity:1}
+}
+@-webkit-keyframes myPhone /* Safari 和 Chrome */
+{
+	from {top:80px;}
+	to {top:0px;}
+}
+@-webkit-keyframes myPic /* Safari 和 Chrome */
+{
+	from {top:199px; opacity:0}
+	to {top:119px;  opacity:1}
+}
+#weixin-tip{
+	position:absolute;
+	display:none;
+	font-size:3rem;
+	text-align:center;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,0.8);
+	z-index:9;
+}
+</style>
+</head>
+<body>
+	<div id="weixin-tip">
+		<img src="images/429408-20160407113844343-171217909.png" style="position:absolute; top:0; right:0">
+		<!--<span id="close" title="关闭" class="close">关闭</span>-->
+	</div>
+	<h1 class="title">沈阳栢世嘉贵金属业贸易所</h1>
+	<h2 class="title">手机交易平台</h2>
+	<img class="appicon" src="images/PSPICON.png" >
+    <div id="test" class="download"><a href="#" id="J_weixin">点击下载</a></div>
+	<footer style="position:relative;">
+		<img src="images/phone.png" class="Anphone">
+		<img src="images/DOUBLE-CLICK-AND-PASTE.png" class="Anpic">
+	</footer>
+</body>
+</html>
